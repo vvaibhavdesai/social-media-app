@@ -1,0 +1,105 @@
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@437;551;700&family=Parisienne&display=swap");
+
+.m-header {
+  /* position: fixed; */
+  font-family: "Dancing Script", cursive;
+  top: 0;
+  width: 100%;
+  z-index: 5;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0 0 2rem 0;
+  padding: 0.2rem 0.5rem;
+  background: #f6f6f6;
+  border-bottom:3px solid lightgray 
+}
+button {
+  background:transparent;
+  outline:none;
+  border:transparent;
+cursor: pointer;
+}
+
+
+button:active {
+transform: scale(0.9);
+/* Scaling button to 0.98 to its original size */
+box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
+outline: none;
+}
+
+.m-header-title {
+  font-weight: bolder;
+  background: #6267b8;
+  font-size:1.7rem;
+  background: -webkit-linear-gradient(to right, #6267b8 0%, #ee7f00 100%);
+  background: -moz-linear-gradient(to right, #6267b8 0%, #ee7f00 100%);
+  background: linear-gradient(to right, #6267b8 0%, #ee7f00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  margin: 1rem;
+}
+
+.m-header-icon {
+  margin: 1rem;
+  color: #657089;
+  font-size: 2rem;
+}
+.m-header-search {
+  /* min-width:20rem; */
+  width: 15rem;
+  height: 1.5rem;
+  background: transparent;
+  outline: none;
+}
+
+/* @media screen and (min-width: 750px){
+  .m-header-search{
+    width:10rem;
+  }
+} */
+
+
+@media screen and (max-width: 790px) {
+  .m-header {
+    position: fixed;
+    font-family: "Dancing Script", cursive;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 0 2rem 0;
+    padding: 0.2rem 0.5rem;
+    background: #f6f6f6;
+  }
+  .m-header-title {
+    font-size: 1.5rem;
+    font-weight: bolder;
+    background: #6267b8;
+    background: -webkit-linear-gradient(to right, #6267b8 0%, #ee7f00 100%);
+    background: -moz-linear-gradient(to right, #6267b8 0%, #ee7f00 100%);
+    background: linear-gradient(to right, #6267b8 0%, #ee7f00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin: 1rem;
+  }
+  .m-header-icon {
+    margin: 1rem;
+    font-size: 1.5rem;
+  }
+  .m-header-search, .icons {
+    display: none;
+  }
+
+}
+
+@media (min-width: 426px) and (max-width: 789px) {
+  .m-header-icon {
+    margin: 1rem;
+    color: #657089;
+    font-size: 2.5rem;
+  }
+}

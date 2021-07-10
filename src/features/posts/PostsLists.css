@@ -1,0 +1,141 @@
+.m-postcard {
+  display:flex;
+  flex-direction:column;
+  justify-content: space-between;
+  height:auto;
+  max-width: 600px;
+  background: white;
+  margin: 1rem 1rem 45px 1rem;
+  border-radius: 20px;
+}
+.m-postcard-img {
+  object-fit: contain;
+  /* margin:1rem; */
+  max-height: 500px;
+  max-width:100%
+}
+.m-postcard-caption{
+  display:flex;
+  flex-direction:column;
+  align-items: flex-start;
+  margin:1rem 0 0 1rem;
+}
+.m-postcard-likes{
+  font-size:1.2rem;
+}
+
+.m-postcard-comment-input{
+  margin-bottom:1rem
+}
+
+.m-postcard-caption-title{
+  font-size: 1.2rem;
+  font-weight:600;
+  margin-bottom:0.5rem;
+}
+.m-postcard-caption-body{
+  font-size: 1rem;
+  margin-bottom:0.5rem;
+}
+.m-postcard-comment-input-area{
+  width:70%;
+  height:2rem;
+  font-size:1rem;
+  border:transparent;
+  border-bottom:3px solid lightgray;
+  outline: none;
+}
+.input-area{
+  display:none;
+}
+
+.m-postcard-avatar-img {
+  height: 3rem;
+  width: 3rem;
+  object-fit: cover;
+  margin: 1.5rem;
+  overflow: hidden;
+  cursor:pointer;
+}
+.m-postcard-header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.m-postcard-header h5{
+  cursor:pointer;
+}
+.m-postcard-footer {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin:1rem;
+}
+.m-postcard-footer-icons {
+  font-size: 2rem;
+  color: #657089;
+  margin: 2rem 2rem 1rem 2rem;
+}
+.post-comment-icon {
+  font-size:1.5rem;
+  color: #657089;
+}
+.post-feed-adjuster{
+  margin-top:5rem;
+}
+
+button {
+    background:transparent;
+    outline:none;
+    border:transparent;
+  cursor: pointer;
+}
+
+
+button:active {
+  transform: scale(0.9);
+  /* Scaling button to 0.98 to its original size */
+  box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
+  outline: none;
+}
+
+@media screen and (max-width: 450px) {
+  .m-postcard {
+    min-height: 380px;
+    /* max-height: 400px; */
+    max-width: 400px;
+    background: white;
+    margin: 1rem 1rem 45px 1rem;
+    border-radius: 20px;
+  }
+  .m-postcard-container{
+    max-width:400px
+  }
+  .m-postcard-img {
+    object-fit: contain;
+    /* width: 80%; */
+    border-radius: 20px;
+    max-height: 250px;
+  }
+  .m-postcard-avatar-img {
+    height: 2rem;
+    width: 2rem;
+    object-fit: cover;
+    margin: 1rem;
+    overflow: hidden;
+  }
+  .m-postcard-header {
+    display: flex;
+    justify-content: flex-start;
+  }
+  .m-postcard-footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .m-postcard-footer-icons {
+    font-size: 1.5rem;
+    color: #657089;
+    margin: 1rem;
+  }
+}
