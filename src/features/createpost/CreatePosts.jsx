@@ -69,6 +69,7 @@ export function CreatePosts() {
         <div>
           <input
           value={title} 
+          maxLength={120}
           onChange={(e)=>setTitle(e.target.value)}
           type="text" />
           <label>title</label>
@@ -76,6 +77,7 @@ export function CreatePosts() {
         <div>
           <input 
           value={body}
+          maxLength={200}
           onChange={(e)=>setBody(e.target.value)}
           type="text" />
           <label>body</label>

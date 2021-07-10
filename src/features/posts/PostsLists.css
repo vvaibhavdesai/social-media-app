@@ -54,6 +54,7 @@
   width: 3rem;
   object-fit: cover;
   margin: 1.5rem;
+  border-radius:50%;
   overflow: hidden;
   cursor:pointer;
 }
