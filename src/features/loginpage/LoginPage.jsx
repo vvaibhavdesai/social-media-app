@@ -153,28 +153,6 @@ export function LoginPage() {
     }
   };
 
-  // useEffect(() => {
-  //   (async function () {
-  //     try {
-  //       const { token } = JSON.parse(localStorage?.getItem("login"));
-  //       const res = await axios.post(
-  //         "https://socialMedia.vaibhavdesai888.repl.co/users/secret",
-  //         {},
-  //         {
-  //           headers: {
-  //             Authorization: token,
-  //           },
-  //         }
-  //       );
-  //       const data = res.data.user;
-  //       dispatch(loginUserDetail({ data }));
-  //       navigate("/");
-  //     } catch (error) {
-  //       console.log(error.message);
-  //     }
-  //   })();
-  // }, []);
-
   useEffect(() => {
     if (user.token) {
       navigate("/");
@@ -273,6 +251,10 @@ export function LoginPage() {
                 </div>
 
                 <input
+                style={{whiteSpace: "normal",
+                wordWrap: "break-word",
+                width: "200px",
+                overflow: "auto"}}
                   onChange={(e) => setImg(e.target.files[0])}
                   type="file"
                 />
