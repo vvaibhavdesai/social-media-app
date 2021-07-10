@@ -84,6 +84,10 @@ export function CreatePosts() {
         </div>
         <div>
           <input 
+          style={{whiteSpace: "normal",
+            wordWrap: "break-word",
+            width: "200px",
+            overflow: "auto",}}
           onChange={(e)=>setImage(e.target.files[0])}
           type="file" />
         </div>
