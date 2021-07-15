@@ -27,7 +27,10 @@
 .m-postcard-comment-input{
   margin-bottom:1rem
 }
-
+.post-feed-adjuster{
+  margin-top:10rem;
+  margin-bottom:5rem;
+}
 .m-postcard-caption-title{
   font-size: 1.2rem;
   font-weight:600;
@@ -81,9 +84,6 @@
   font-size:1.5rem;
   color: #657089;
 }
-.post-feed-adjuster{
-  margin-top:5rem;
-}
 
 button {
     background:transparent;
@@ -115,7 +115,6 @@ button:active {
   .m-postcard-img {
     object-fit: contain;
     /* width: 80%; */
-    border-radius: 20px;
     max-height: 250px;
   }
   .m-postcard-avatar-img {
@@ -138,5 +137,9 @@ button:active {
     font-size: 1.5rem;
     color: #657089;
     margin: 1rem;
+  }
+  .post-feed-adjuster{
+    margin-top:5rem;
+    margin-bottom:5rem;
   }
 }

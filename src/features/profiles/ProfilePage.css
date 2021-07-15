@@ -32,9 +32,34 @@
     margin:1rem;
     max-height: 8rem;
     max-width: 8rem;
+    object-fit:contain;
+    border:2px solid lightgray;
 }
 
-
+.profile-avatar-container{
+    position:relative;
+}
+.profile-uploadpic-action{
+    position:absolute;
+    top:15px;
+    right:30px;
+    background:#c1c6d3;
+    border-radius:50%;
+    width:2rem;
+    height:2rem;
+    border:1px solid#f6f6f6;
+    z-index:5;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    cursor:pointer;
+}
+.profile-uploadpic-action input{
+    display:none;
+}
+.profile-upload-icon{
+    font-size:1.5rem;
+}
 
 .profile-card-name{
     display:flex;
@@ -75,13 +100,52 @@
 }
 
 
+.profile-card{
+    margin-top:5rem;
+}
 
+.profile-image-update{
+    position:fixed;
+    background:blue;
+}
+.profile-image-update-modal{
+    display:flex;
+    position:absolute;
+    top: -5rem;
+    right: -24rem;
+    flex-direction:column;
+    justify-content:center;
+    align-items: flex-start;
+    background:red;
+    background: rgba( 155, 155, 155, 0.30 );
+    box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+    backdrop-filter: blur( 20.0px );
+    -webkit-backdrop-filter: blur( 20.0px );
+    border-radius: 10px;
+    border: 1px solid rgba( 255, 255, 255, 0.18 );
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
+}
+.show{
+    padding:0.2rem 0.5rem;
+    transition:1s width;
+    width:15rem;
+}
+.hide{
+    /* width:-1rem; */
+    border:none;
+    transition:1s width;
+    overflow:hidden;
+}
 
+.profile-image-update-actionbtn > i{
+    font-size:1.5rem;
+}
+.hide{
+    width:0;
+}
 @media screen and (max-width: 450px) {
-
-    .profile-card{
-        margin-top:5rem;
-    }
 
     .profile-avatar{
         height:5rem;
@@ -116,5 +180,18 @@
     .profile-card-posts{
         gap: 5px;
     }
-
+    .profile-uploadpic-action{
+    top:10px;
+    right:20px;
+    }
+    .profile-upload-i{
+    font-size:1rem;
+    }
+    .profile-image-update-modal{
+        top:-2rem;
+        right:-15rem;
+    }
+    .show{
+        width:7rem;
+    }
 }
