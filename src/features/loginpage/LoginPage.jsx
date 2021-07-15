@@ -6,12 +6,15 @@ import { loginUserDetail, signupUserDetail } from "./LoginPageSlice";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { Toast, callToast } from '../../utils/Toast'
+import { Toast, callToast } from "../../utils/Toast";
+import { ToastContainer, toast } from "react-toastify";
+
 import axios from "axios";
 
 const FormContainer = styled.div`
   min-height: 80vh;
   max-height: 100%;
+  margin-top:5rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -75,7 +78,9 @@ const FormInput = styled.input`
     transition: background-color 5000s ease-in-out 0s;
   }
 `;
-
+const black ={
+  background:'black'
+}
 const SubmitBtn = styled.input`
   width: 90%;
   cursor: pointer;
@@ -101,6 +106,15 @@ const SubmitBtn = styled.input`
   }
 `;
 
+const notify=(message)=>toast.dark(message, {
+  position: "bottom-right",
+  autoClose: 5000,
+  hideProgressBar: false,
+  closeOnClick: true,
+  pauseOnHover: true,
+  draggable: true,
+  progress: undefined,
+})
 export function LoginPage() {
   const [signup, setSignUp] = useState(false);
   const [userName, setUserName] = useState("");
@@ -143,7 +157,7 @@ export function LoginPage() {
             email,
             password,
             pictureUrl: url,
-            name:userName,
+            name: userName,
           },
         }
       );
@@ -161,7 +175,7 @@ export function LoginPage() {
 
   const userDetailCollector = (data) => {
     if (!signup) {
-      console.log(data," yeh data collector ")
+      console.log(data, " yeh data collector ");
       dispatch(loginUserDetail({ data }));
     } else if (signup) {
       dispatch(signupUserDetail({ data }));
@@ -183,11 +197,11 @@ export function LoginPage() {
         "login",
         JSON.stringify({ userLoggedIn: true, token: data.token })
       );
-      console.log(data," yeh dekho data ")
+      console.log(data, " yeh dekho data ");
       userDetailCollector(data);
     } catch (error) {
-      callToast(error.response.data.message)
-      console.log(error);
+      notify(error.response.data.message)
+      ;
 
       console.log(error.response.data.message);
     }
@@ -212,70 +226,84 @@ export function LoginPage() {
   };
 
   return (
-    <>  <div style={{width:"100%"}}>
-      <header className="m-header">
-        <h1 className="m-header-title">Antigram</h1>
-        <div>&nbsp;</div>
-        <div>&nbsp;</div>
-      </header>
-      <FormContainer>
-        <Form onSubmit={(e) => e.preventDefault()}>
-          <FormHeader>
-            {signup ? "SignUp" : "Login"}
-            <>
-              <button onClick={() => setSignUp((prev) => !prev)}>
-                {signup ? `login` : `signup`}
-              </button>
-            </>
-          </FormHeader>
-          <div>
-            <FormInput
-              onChange={(e) => setEmail(e.target.value)}
-              type="email"
-              placeholder="email"
-            ></FormInput>
-          </div>
-          <div>
-            <FormInput
-              onChange={(e) => setPassword(e.target.value)}
-              type="password"
-              placeholder="password"
-            ></FormInput>
-            {signup && (
+    
+      <div style={{ width: "100%" }}>
+        <header className="m-header">
+          <h1 className="m-header-title">Antigram</h1>
+          <div>&nbsp;</div>
+          <div>&nbsp;</div>
+        </header>
+        <div>
+        <ToastContainer
+            position="bottom-right"
+            autoClose={2000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          />
+        </div>
+        <FormContainer>
+          <Form onSubmit={(e) => e.preventDefault()}>
+            <FormHeader>
+              {signup ? "SignUp" : "Login"}
               <>
-                <div>
-                  <FormInput
-                    onChange={(e) => setUserName(e.target.value)}
-                    placeholder="username"
-                  ></FormInput>
-                </div>
-
-                <input
-                style={{whiteSpace: "normal",
-                wordWrap: "break-word",
-                width: "200px",
-                overflow: "auto"}}
-                  onChange={(e) => setImg(e.target.files[0])}
-                  type="file"
-                />
+                <button onClick={() => setSignUp((prev) => !prev)}>
+                  {signup ? `login` : `signup`}
+                </button>
               </>
-            )}
-          </div>
-          <SubmitBtn
-            onClick={() =>
-              signup
-                ? img
-                  ? signupProfilePicture(img)
-                  : signUpHandler()
-                : loginHandler()
-            }
-            type="submit"
-            placeholder="Submit"
-          ></SubmitBtn>
-        </Form>
-      </FormContainer>
-      <div><Toast/></div>
+            </FormHeader>
+            <div>
+              <FormInput
+                onChange={(e) => setEmail(e.target.value)}
+                type="email"
+                placeholder="email"
+              ></FormInput>
+            </div>
+            <div>
+              <FormInput
+                onChange={(e) => setPassword(e.target.value)}
+                type="password"
+                placeholder="password"
+              ></FormInput>
+              {signup && (
+                <>
+                  <div>
+                    <FormInput
+                      onChange={(e) => setUserName(e.target.value)}
+                      placeholder="username"
+                    ></FormInput>
+                  </div>
+
+                  <input
+                    style={{
+                      whiteSpace: "normal",
+                      wordWrap: "break-word",
+                      width: "200px",
+                      overflow: "auto",
+                    }}
+                    onChange={(e) => setImg(e.target.files[0])}
+                    type="file"
+                  />
+                </>
+              )}
+            </div>
+            <SubmitBtn
+              onClick={() =>
+                signup
+                  ? img
+                    ? signupProfilePicture(img)
+                    : signUpHandler()
+                  : loginHandler()
+              }
+              type="submit"
+              placeholder="Submit"
+            ></SubmitBtn>
+          </Form>
+        </FormContainer>
       </div>
-    </>
   );
 }
