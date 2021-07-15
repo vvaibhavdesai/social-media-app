@@ -1,8 +1,11 @@
 import "./ProfilePage.css";
 import { IoSettingsOutline } from "react-icons/io5";
+import { FiCamera } from "react-icons/fi";
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { updatedProfilePicture } from "../loginpage/LoginPageSlice";
+import { MdCancel } from "react-icons/md";
+import { TiTick } from "react-icons/ti"
 import axios from "axios";
 
 export function ProfilePage() {
@@ -12,8 +15,8 @@ export function ProfilePage() {
   const [postsData, setPostData] = useState([]);
   const [showInput, setShowInput] = useState(false);
   const [img, setImg] = useState("");
-  const [ url, setUrl ] = useState("")
-  console.log(userData,"me")
+  const [url, setUrl] = useState("");
+  console.log(img, "me");
 
   useEffect(() => {
     (async function () {
@@ -32,20 +35,20 @@ export function ProfilePage() {
       }
     })();
   }, []);
-  
-  useEffect(()=>{
-    console.log(url,"yeh dekh url useEffect meh agya hai ")
-    if(url){
+
+  useEffect(() => {
+    console.log(url, "yeh dekh url useEffect meh agya hai ");
+    if (url) {
       updateToDb(url);
       dispatch(updatedProfilePicture({ url }));
     }
-  },[url])
+  }, [url]);
 
   const CLOUDINARY_URL_API =
     "https://api.cloudinary.com/v1_1/dqn2jzk2n/image/upload ";
 
   const updateProfilePicture = (image) => {
-    console.log(image,"yeh dekh function call hogya ")
+    console.log(image, "yeh dekh function call hogya ");
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "anti-gram");
@@ -54,11 +57,10 @@ export function ProfilePage() {
     postImagetoCloudinary(data);
   };
 
-  
-const postImagetoCloudinary = async (imgData) => {
+  const postImagetoCloudinary = async (imgData) => {
     try {
       const { data } = await axios.post(CLOUDINARY_URL_API, imgData);
-      console.log(data.secure_url,"yeh meh hu cloudinary wala")
+      console.log(data.secure_url, "yeh meh hu cloudinary wala");
       setUrl(data.secure_url);
     } catch (error) {
       console.log(error.message);
@@ -79,7 +81,8 @@ const postImagetoCloudinary = async (imgData) => {
         }
       );
       console.log(data, "yeh h data");
-      console.log(url,"yeh h url")
+      console.log(url, "yeh h url");
+      setImg("")
     } catch (error) {
       console.log(error.message);
     }
@@ -89,36 +92,49 @@ const postImagetoCloudinary = async (imgData) => {
     <div>
       <div className="profile-card">
         <div className="profile-card-header">
-          <img
-            className="profile-avatar"
-            alt=""
-            src={
-              userData?.pictureUrl
-                ? userData.pictureUrl
-                : "http://placeimg.com/640/480/people"
-            }
-          />
-
+          <div className="profile-avatar-container">
+            <img
+              className="profile-avatar"
+              alt=""
+              src={
+                userData?.pictureUrl
+                  ? userData.pictureUrl
+                  : "http://placeimg.com/640/480/people"
+              }
+            />
+            <label
+            className="profile-uploadpic-action"
+            htmlFor="icon-button-file"
+            >
+              <input 
+              accept="image/*"
+              id="icon-button-file"
+              type="file"
+              data-max-size="2048"
+              onChange={(e)=>setImg(e.target.files[0])}
+              />
+              <FiCamera className="profile-upload-icon" />
+            </label>
+        <div className="profile-image-update">
+            <div className={`profile-image-update-modal ${ img ? "show":"hide"}`}>
+              <span className="profile-image-update-name">{img?.name}</span>
+              <span>
+              <button className="profile-image-update-actionbtn" onClick={() => updateProfilePicture(img)}><i><TiTick/></i></button>
+              <button className="profile-image-update-actionbtn" onClick={()=>setImg("")}><i><MdCancel/></i></button></span>
+            </div>
+        </div>
+          </div>
           <div className="profile-card-name">
             <p>
               <strong>{userData.name}</strong>
             </p>
-            <button
-              onClick={() => setShowInput((prev) => !prev)}
-              className="profile-card-buttons"
-            >
-              Edit Profile
-            </button>
+            {/* <button className="profile-card-buttons">Edit Profile</button> */}
           </div>
           <button>
             <i className="profile-card-settings">
               <IoSettingsOutline />
             </i>
           </button>
-        </div>
-        <div>
-          {showInput && <div><input onChange={(e) => setImg(e.target.files[0])} type="file" />
-          <button onClick={() => updateProfilePicture(img)}>Update</button></div>}
         </div>
 
         <div className="profile-card-userdetails">
