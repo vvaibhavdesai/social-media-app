@@ -147,7 +147,7 @@ export function PostsListing() {
           )}
         </button>
 
-        <button onClick={() => setShowComment((prev) => !prev)}>
+        <button onClick={() => navigate(`/posts/${post._id}`)}>
           <i className="m-postcard-footer-icons">
             <FaRegCommentDots />
           </i>
@@ -156,14 +156,12 @@ export function PostsListing() {
       <div className="m-postcard-comment-input">
         <input
           onChange={(e) => setComment(e.target.value)}
-          className={`m-postcard-comment-input-area ${
-            showComment ? "" : "input-area"
-          }`}
+          className="m-postcard-comment-input-area"
           type="text"
         />
         <button 
         onClick={()=>postComment(comment, userToken, post._id)}
-        className={showComment ? "" : "input-area"}>
+        >
           <i className={`post-comment-icon `}>
             <RiSendPlaneLine />
           </i>

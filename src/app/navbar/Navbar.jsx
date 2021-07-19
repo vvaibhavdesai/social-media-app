@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { BiHomeSmile, BiSearchAlt2, BiPlus, BiBell } from "react-icons/bi";
 import { CgProfile } from "react-icons/cg";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
+
 export function Navbar() {
+
   return (
     <nav className="m-nav">
       <Link to="/">

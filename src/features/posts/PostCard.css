@@ -1,0 +1,54 @@
+.i-postcard-img{
+    min-width:30rem;
+    max-width:30rem;
+    min-height:30rem;
+    height:auto;
+    object-fit:contain;
+}
+.i-postcard{
+    display:flex;
+    border:1px solid lightgray;
+    width:50rem;
+    /* flex-direction: ; */
+}
+
+.i-postcard-avatar{
+    height:3rem;
+    width:3rem;
+    border-radius:50%;
+    margin-left:0.5rem
+}
+.i-postcard-userDetail  p{
+    margin-left:0.5rem;
+}
+.i-postcard-userDetail{
+    display:flex;
+    width:100%;
+    border-bottom:2px solid lightgray;
+    padding:0.5rem 0 
+}
+.i-postcard-content{
+    width:100%;
+}
+
+
+.i-postcard-comments{
+    overflow-y:scroll;
+    height:20rem;
+    border:1px solid lightgray;
+}
+
+.i-postcard-comment{
+    display:flex;
+    margin-left:1rem;
+}
+
+.i-postcard-comment-username{
+    font-weight:700
+}
+
+.i-postcard-comment-text{
+    margin-left:1rem;
+    word-wrap:break-word
+
+}

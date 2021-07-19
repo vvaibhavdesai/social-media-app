@@ -14,6 +14,7 @@ import axios from "axios";
 import { loginUserDetail, signupUserDetail } from "./features/loginpage/LoginPageSlice";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
+import { PostCard } from './features/posts/PostCard';
 
 
 function App() {
@@ -63,6 +64,7 @@ function App() {
           <PrivateRoute path="/createposts" element={<CreatePosts />} />
           <PrivateRoute path="/profile" element={<ProfilePage />} />
           <Route path="/userprofile/:userId" element={<UserProfile />} />
+          <Route path='/posts/:postid' element= {<PostCard/>} />
         </Routes>
       </section>
     </div>
