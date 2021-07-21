@@ -2,6 +2,7 @@ import React,{ useState,useEffect } from "react";
 import axios from "axios"
 import "./CreatePosts.css";
 import { useSelector } from "react-redux"
+import { toast, ToastContainer } from "react-toastify";
 
 export function CreatePosts() {
   const [ title, setTitle ] = useState("")
@@ -21,6 +22,15 @@ export function CreatePosts() {
   const CLOUDINARY_URL_API = 'https://api.cloudinary.com/v1_1/dqn2jzk2n/image/upload '
   
   const CREATE_POST_API = 'https://socialMedia.vaibhavdesai888.repl.co/posts/createposts'
+  
+    const postImagetoCloudinary = async(imgData)=>{
+      try{
+        const { data } = await axios.post(CLOUDINARY_URL_API,imgData)
+        setUrl(data.secure_url)
+      }catch(error){
+        console.log(error.message)
+      }
+    }
 
   const postDetailsAppender = ()=>{
     const data = new FormData();
@@ -32,14 +42,15 @@ export function CreatePosts() {
 
   }
 
-  const postImagetoCloudinary = async(imgData)=>{
-    try{
-      const { data } = await axios.post(CLOUDINARY_URL_API,imgData)
-      setUrl(data.secure_url)
-    }catch(error){
-      console.log(error.message)
-    }
-  }
+  const notify=(message)=>toast.dark(message, {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+  })
 
   const sendPostsToDb = async()=>{
     try{
@@ -56,8 +67,12 @@ export function CreatePosts() {
         },
       }
       )
-      console.log(res,"yeh hai response re bhava")
+      setTitle("")
+      setBody("")
+      setImage("")
+      notify("Upload Succesfull")
     }catch(error){
+      notify(error.response.message)
       console.log(error.message)
     }
   }
@@ -65,6 +80,7 @@ export function CreatePosts() {
   return (
     <div className="createpost-content">
       Welcome to posting
+      <ToastContainer/>
       <div>
         <div>
           <input
