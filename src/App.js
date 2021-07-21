@@ -15,6 +15,7 @@ import { loginUserDetail, signupUserDetail } from "./features/loginpage/LoginPag
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { PostCard } from './features/posts/PostCard';
+import { ExplorePostListing } from "./features/posts/ExplorePostlisting"
 
 
 function App() {
@@ -59,11 +60,12 @@ function App() {
       <section className="post-section">
         <Routes>
           <PrivateRoute path="/" element={<PostsListing />} />
-          <Route path="/notifications" element={<NotificationsList />} />
-          <Route path="/register" element={<LoginPage />} />
           <PrivateRoute path="/createposts" element={<CreatePosts />} />
           <PrivateRoute path="/profile" element={<ProfilePage />} />
+          <PrivateRoute path="/explore" element={<ExplorePostListing />} />
+          <Route path="/notifications" element={<NotificationsList />} />
           <Route path="/userprofile/:userId" element={<UserProfile />} />
+          <Route path="/register" element={<LoginPage />} />
           <Route path='/posts/:postid' element= {<PostCard/>} />
         </Routes>
       </section>

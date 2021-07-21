@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./PostsLists.css";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchPosts } from "./postsSlice";
-import { likeToggled } from "./postsSlice";
+import { fetchexplorePosts } from "./exploreSlice";
+import { likeToggled } from "./exploreSlice";
 import { PostTemplate } from "./PostTemplate";
 import axios from "axios";
 
@@ -24,7 +24,6 @@ const likePost = async (id, token, dispatch) => {
     // const newData = data.data;
     const newData = data;
     dispatch(likeToggled({ newData }));
-    console.log(data, "yeh h response from like");
   } catch (error) {
     console.log(error.message);
   }
@@ -47,7 +46,6 @@ const unLikePost = async (id, token, dispatch) => {
     );
     const newData = data;
     dispatch(likeToggled({ newData }));
-    console.log(data, "yeh h response from like");
   } catch (error) {
     console.log(error.message);
   }
@@ -67,15 +65,14 @@ const postComment = async (comment, token, postId) => {
         },
       }
     );
-    console.log(data, "yeh h response from like");
   } catch (error) {
     console.log(error.message);
   }
 };
 
-export function PostsListing() {
-  const postsData = useSelector((state) => state.posts.posts);
-  const postsStatus = useSelector((state) => state.posts.status);
+export function ExplorePostListing() {
+  const postsData = useSelector((state) => state.explore.posts);
+  const postsStatus = useSelector((state) => state.explore.status);
   const userToken = useSelector((state) => state.users.token);
   const userId = useSelector((state) => state.users.decodedUserData?._id);
   const [comment, setComment] = useState("");
@@ -84,7 +81,7 @@ export function PostsListing() {
 
   useEffect(() => {
     if (postsStatus === "idle") {
-      dispatch(fetchPosts(userToken));
+      dispatch(fetchexplorePosts(userToken));
     }
   }, [dispatch, postsStatus, userToken]);
 
