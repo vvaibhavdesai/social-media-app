@@ -9,7 +9,7 @@ import { CgProfile } from "react-icons/cg";
 import "../navbar/Navbar.css";
 import "./Header.css";
 import { Link } from "react-router-dom";
-import { useState, useEffect, useCallback } from "react";
+import { useState, useCallback } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 
