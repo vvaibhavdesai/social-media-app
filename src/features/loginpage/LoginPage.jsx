@@ -120,52 +120,12 @@ export function LoginPage() {
   const [userName, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [img, setImg] = useState("");
-  const [url, setUrl] = useState("");
+
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.users);
-  const CLOUDINARY_URL_API =
-    "https://api.cloudinary.com/v1_1/dqn2jzk2n/image/upload ";
 
-  const signupProfilePicture = (image) => {
-    const data = new FormData();
-    data.append("file", image);
-    data.append("upload_preset", "anti-gram");
-    data.append("cloud_name", "dqn2jzk2n");
-    console.log(data);
-    postImagetoCloudinary(data);
-    sendPostsToDb();
-  };
-
-  const postImagetoCloudinary = async (imgData) => {
-    try {
-      const { data } = await axios.post(CLOUDINARY_URL_API, imgData);
-      setUrl(data.secure_url);
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
-  const sendPostsToDb = async () => {
-    try {
-      const res = await axios.post(
-        `https://socialMedia.vaibhavdesai888.repl.co/users/signup`,
-        {
-          data: {
-            email,
-            password,
-            pictureUrl: url,
-            name: userName,
-          },
-        }
-      );
-      console.log(res, "yeh hai response re bhava");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
 
   useEffect(() => {
     if (user.token) {
@@ -221,6 +181,8 @@ export function LoginPage() {
       );
       userDetailCollector(data);
     } catch (error) {
+      notify(error.response.data.message)
+      ;
       console.log(error.message);
     }
   };
@@ -277,26 +239,13 @@ export function LoginPage() {
                       placeholder="username"
                     ></FormInput>
                   </div>
-
-                  <input
-                    style={{
-                      whiteSpace: "normal",
-                      wordWrap: "break-word",
-                      width: "200px",
-                      overflow: "auto",
-                    }}
-                    onChange={(e) => setImg(e.target.files[0])}
-                    type="file"
-                  />
                 </>
               )}
             </div>
             <SubmitBtn
               onClick={() =>
                 signup
-                  ? img
-                    ? signupProfilePicture(img)
-                    : signUpHandler()
+                  ?  signUpHandler()
                   : loginHandler()
               }
               type="submit"
