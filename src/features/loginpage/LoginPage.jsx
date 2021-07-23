@@ -173,7 +173,7 @@ export function LoginPage() {
         "https://socialMedia.vaibhavdesai888.repl.co/users/signup",
         {
           data: {
-            userName,
+            name:userName,
             email,
             password,
           },
@@ -251,6 +251,14 @@ export function LoginPage() {
               type="submit"
               placeholder="Submit"
             ></SubmitBtn>
+            {
+              !signup ? <span style={{color:"#535353"}}>
+                <p>
+                TestEmail: vaibhavdesai818@gmail.com</p>
+                <p>
+                password: vaibhav</p>
+              </span>:""
+            }
           </Form>
         </FormContainer>
       </div>
