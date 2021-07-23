@@ -59,6 +59,7 @@ export function UserProfile() {
     (async function(){
       try{
         const { data } = await axios.get(`https://socialMedia.vaibhavdesai888.repl.co/profile/user/${userId}` )
+        console.log(data,"yeh hai data aya useffectmeh")
         setUser(data)
       }catch(error){
         console.log(error.message)
@@ -73,7 +74,7 @@ export function UserProfile() {
           <img
             className="profile-avatar"
             alt=""
-            src={loggedInUserData.pictureUrl}
+            src={user?.user?.pictureUrl}
           />
 
           <div className="profile-card-name">
