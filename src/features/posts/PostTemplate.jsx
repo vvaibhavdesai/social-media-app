@@ -68,7 +68,7 @@ export const PostTemplate = ({ post, likePost, unLikePost, userId, userToken, di
             className="m-postcard-comment-input-area"
             type="text"
           />
-          <button onClick={() => postComment(comment, userToken, post._id)}>
+          <button onClick={() => postComment(setComment,comment, userToken, post._id)}>
             <i className={`post-comment-icon `}>
               <RiSendPlaneLine />
             </i>

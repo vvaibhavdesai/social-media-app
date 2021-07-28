@@ -145,6 +145,17 @@
 .hide{
     width:0;
 }
+.logout-button{
+    position:fixed;
+    top:12rem;
+    
+}
+.profile-buttons{
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
 @media screen and (max-width: 450px) {
 
     .profile-avatar{
@@ -165,9 +176,9 @@
         font-size:0.9rem
     }
     .profile-card-buttons{
-        border:1px solid lightgray;
-        width:100%;
+        /* width:100%; */
     }
+    
     .profile-card-separation{
         margin-right:1rem;
         margin-left:1rem;
@@ -193,5 +204,9 @@
     }
     .show{
         width:7rem;
+    }
+    .logout-button{
+        top:10rem;
+        right:1rem;
     }
 }

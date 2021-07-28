@@ -53,7 +53,7 @@ const unLikePost = async (id, token, dispatch) => {
   }
 };
 
-const postComment = async (comment, token, postId) => {
+const postComment = async (setComment, comment, token, postId) => {
   try {
     const { data } = await axios.post(
       `https://socialMedia.vaibhavdesai888.repl.co/posts/comment`,
@@ -68,6 +68,7 @@ const postComment = async (comment, token, postId) => {
       }
     );
     console.log(data, "yeh h response from like");
+    setComment("")
   } catch (error) {
     console.log(error.message);
   }

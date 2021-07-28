@@ -2,6 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState =
   {
+    success:false,
+    decodedUserData:null,
+    token:null
 
   };
 
@@ -11,7 +14,10 @@ const usersSlice = createSlice({
   reducers: {
     loginUserDetail: (state, action) => {
       console.log(action.payload.data, "from reducer bholte login");
-      return {  ...action.payload.data }
+      state.success = action.payload.data.success
+      state.decodedUserData = action.payload.data.decodedUserData
+      state.token = action.payload.data.token
+      // return {  ...action.payload.data }
     },
     signupUserDetail: (state, action) => {
       console.log(action.payload.data, "from reducer bholte signup");
@@ -28,10 +34,14 @@ const usersSlice = createSlice({
         state.decodedUserData.pictureUrl=action.payload.url
       }
 
+    },
+    userLoggedOut:(state,action)=>{
+      state.decodedUserData = {}
+      state.token = null
     }
   },
   extraReducers: {},
 });
-export const { loginUserDetail, signupUserDetail, followedUser, updatedProfilePicture } = usersSlice.actions;
+export const { loginUserDetail, signupUserDetail, followedUser, updatedProfilePicture, userLoggedOut } = usersSlice.actions;
 
 export default usersSlice.reducer;

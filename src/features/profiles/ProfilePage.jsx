@@ -5,19 +5,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { updatedProfilePicture } from "../loginpage/LoginPageSlice";
 import { MdCancel } from "react-icons/md";
-import { TiTick } from "react-icons/ti"
+import { TiTick } from "react-icons/ti";
+import { userLoggedOut } from "../loginpage/LoginPageSlice"
+import { useNavigate } from "react-router-dom"
 import axios from "axios";
 
 export function ProfilePage() {
   const userData = useSelector((state) => state.users.decodedUserData) || {};
+  const users = useSelector((state) => state.users) 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
   const [postsData, setPostData] = useState([]);
-  const [showInput, setShowInput] = useState(false);
+  const [logoutButton, setLogoutButton] = useState(false);
   const [img, setImg] = useState("");
   const [url, setUrl] = useState("");
-  console.log(img, "me");
-
+  const navigate = useNavigate()
+  console.log(users,"yeh dekho naya redux")
   useEffect(() => {
     (async function () {
       try {
@@ -35,6 +38,17 @@ export function ProfilePage() {
       }
     })();
   }, []);
+
+
+  const logoutUser=async()=>{
+    localStorage.removeItem("login")    
+    dispatch(userLoggedOut())
+    navigate('/register')
+    // if(!token){
+    //   console.log("yeh dekh token meh aya ")
+    //   return navigate('/register')
+    // }
+  }
 
   useEffect(() => {
     console.log(url, "yeh dekh url useEffect meh agya hai ");
@@ -82,7 +96,7 @@ export function ProfilePage() {
       );
       console.log(data, "yeh h data");
       console.log(url, "yeh h url");
-      setImg("")
+      setImg("");
     } catch (error) {
       console.log(error.message);
     }
@@ -90,7 +104,7 @@ export function ProfilePage() {
 
   return (
     <div>
-      <div className="profile-card">
+      {userData ? <div className="profile-card">
         <div className="profile-card-header">
           <div className="profile-avatar-container">
             <img
@@ -103,38 +117,67 @@ export function ProfilePage() {
               }
             />
             <label
-            className="profile-uploadpic-action"
-            htmlFor="icon-button-file"
+              className="profile-uploadpic-action"
+              htmlFor="icon-button-file"
             >
-              <input 
-              accept="image/*"
-              id="icon-button-file"
-              type="file"
-              data-max-size="2048"
-              onChange={(e)=>setImg(e.target.files[0])}
+              <input
+                accept="image/*"
+                id="icon-button-file"
+                type="file"
+                data-max-size="2048"
+                onChange={(e) => setImg(e.target.files[0])}
               />
               <FiCamera className="profile-upload-icon" />
             </label>
-        <div className="profile-image-update">
-            <div className={`profile-image-update-modal ${ img ? "show":"hide"}`}>
-              <span className="profile-image-update-name">{img?.name}</span>
-              <span>
-              <button className="profile-image-update-actionbtn" onClick={() => updateProfilePicture(img)}><i><TiTick/></i></button>
-              <button className="profile-image-update-actionbtn" onClick={()=>setImg("")}><i><MdCancel/></i></button></span>
+            <div className="profile-image-update">
+              <div
+                className={`profile-image-update-modal ${
+                  img ? "show" : "hide"
+                }`}
+              >
+                <span className="profile-image-update-name">{img?.name}</span>
+                <span>
+                  <button
+                    className="profile-image-update-actionbtn"
+                    onClick={() => updateProfilePicture(img)}
+                  >
+                    <i>
+                      <TiTick />
+                    </i>
+                  </button>
+                  <button
+                    className="profile-image-update-actionbtn"
+                    onClick={() => setImg("")}
+                  >
+                    <i>
+                      <MdCancel />
+                    </i>
+                  </button>
+                </span>
+              </div>
             </div>
-        </div>
           </div>
           <div className="profile-card-name">
             <p>
               <strong>{userData.name}</strong>
             </p>
-            {/* <button className="profile-card-buttons">Edit Profile</button> */}
           </div>
-          <button>
-            <i className="profile-card-settings">
-              <IoSettingsOutline />
-            </i>
-          </button>
+          <div className="profile-buttons">
+            <button onClick={() => setLogoutButton((prev) => !prev)}>
+              <i className="profile-card-settings">
+                <IoSettingsOutline />
+              </i>
+            </button>
+            {logoutButton && (
+              <button 
+              onClick={logoutUser}
+              className=" logout-button profile-card-buttons">
+                Logout
+              </button>
+            )}
+          </div>
+          {/* <div className="logout-button">
+          </div> */}
         </div>
 
         <div className="profile-card-userdetails">
@@ -159,7 +202,7 @@ export function ProfilePage() {
             </div>
           ))}
         </section>
-      </div>
+      </div>:<>Loading....</>}
     </div>
   );
 }

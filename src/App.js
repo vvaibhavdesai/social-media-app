@@ -47,11 +47,12 @@ function App() {
   }, []);
 
   useEffect(()=>{
-    if(user.token){
+    console.log("hum data user hai")
+    if(user.token!==null){
       console.log(user.token,"hum data user hai")
       navigate('/')
     }
-  },[user.token ,navigate])
+  },[user,navigate])
 
   return (
     <div className="App">
@@ -64,7 +65,7 @@ function App() {
           <PrivateRoute path="/profile" element={<ProfilePage />} />
           <PrivateRoute path="/explore" element={<ExplorePostListing />} />
           <Route path="/notifications" element={<NotificationsList />} />
-          <Route path="/userprofile/:userId" element={<UserProfile />} />
+          <Route path="/userprofile/:userId" element={<UserProfile/>} />
           <Route path="/register" element={<LoginPage />} />
           <Route path='/posts/:postid' element= {<PostCard/>} />
         </Routes>
