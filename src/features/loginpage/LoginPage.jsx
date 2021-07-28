@@ -179,6 +179,10 @@ export function LoginPage() {
           },
         }
       );
+      localStorage.setItem(
+        "login",
+        JSON.stringify({ userLoggedIn: true, token: data.token })
+      );
       userDetailCollector(data);
     } catch (error) {
       notify(error.response.data.message)
