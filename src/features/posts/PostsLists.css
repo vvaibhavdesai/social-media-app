@@ -12,6 +12,7 @@
   object-fit: contain;
   /* margin:1rem; */
   max-height: 500px;
+  min-height:300px;
   max-width:100%
 }
 .m-postcard-caption{

@@ -15,11 +15,13 @@ import { useNavigate } from "react-router";
 
 export function Header() {
   const [search, setSearch] = useState([]);
+  const [ target, setTarget ] = useState("")
+  const [ focus, setFocus ] = useState(false)
   const navigate = useNavigate();
 
   async function fetchSearch(event) {
     const { value } = event.target;
-    console.log(value, "yeh hai search field");
+    console.log(target, "yeh hai search field");
     try {
       if (value) {
         const { data } = await axios.post(
@@ -48,17 +50,20 @@ export function Header() {
     };
   };
   const debounceCaller = useCallback(debouncer(fetchSearch, 500), []);
+  
 
   return (
     <header className="m-header">
       <h1 className="m-header-title">Antigram</h1>
       <span>
         <input
+        onFocus= {()=>setFocus(true)}
+        onBlur= {()=>setFocus(false)}  
           onChange={debounceCaller}
           placeholder="search users"
           className="m-header-search"
         />
-        {search.length > 0 ? (
+        { focus && search.length > 0 ? (
           <ul className="search-modal">
             {search.map((user) => (
               <li
