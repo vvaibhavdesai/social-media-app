@@ -146,7 +146,7 @@
     width:0;
 }
 .logout-button{
-    position:fixed;
+    position:absolute;
     top:12rem;
     
 }
