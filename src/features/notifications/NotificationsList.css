@@ -1,0 +1,16 @@
+@media screen and (max-width: 790px) {
+  .m-notifications {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid lightgray;
+    min-width: 20rem;
+    width: 100%;
+    overflow: hidden;
+  }
+  .m-notifications-txt {
+    margin: 1rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
