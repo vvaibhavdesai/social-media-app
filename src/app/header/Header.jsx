@@ -57,8 +57,7 @@ export function Header() {
       <h1 className="m-header-title">Antigram</h1>
       <span>
         <input
-        onFocus= {()=>setFocus(true)}
-        onBlur= {()=>setFocus(false)}  
+        onFocus= {()=>setFocus(true)} 
           onChange={debounceCaller}
           placeholder="search users"
           className="m-header-search"
@@ -69,7 +68,8 @@ export function Header() {
               <li
                 key={user._id}
                 className="search-modal-list"
-                onClick={() => navigate(`/userprofile/${user._id}`)}
+                onClick={() => {setFocus(false)
+                  navigate(`/userprofile/${user._id}`)}}
               >
                 <span>{user.name}</span> <img className="search-list-userAvatar" src={user.pictureUrl} alt=""/>
               </li>

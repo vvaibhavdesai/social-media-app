@@ -85,6 +85,7 @@ outline: none;
   align-items:center;
   font: size 1.5rem;
   color:black;
+  cursor:pointer
 }
 
 .search-list-userAvatar{
