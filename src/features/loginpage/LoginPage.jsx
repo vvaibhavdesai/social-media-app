@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useState } from "react";
 import "../../app/header/Header.css";
 import { useDispatch } from "react-redux";
-import { loginUserDetail, signupUserDetail } from "./LoginPageSlice";
+import { signupUserDetail, signinUserDetail } from "./LoginPageSlice";
 import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
@@ -136,7 +136,7 @@ export function LoginPage() {
   const userDetailCollector = (data) => {
     if (!signup) {
       console.log(data, " yeh data collector ");
-      dispatch(loginUserDetail({ data }));
+      dispatch(signinUserDetail({ data }));
     } else if (signup) {
       dispatch(signupUserDetail({ data }));
     }
