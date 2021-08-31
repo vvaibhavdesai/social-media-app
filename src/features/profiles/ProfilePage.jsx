@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom"
 import axios from "axios";
 
 export function ProfilePage() {
-  const userData = useSelector((state) => state.users.decodedUserData) || {};
+  const userData = useSelector((state) => state.users.decodedUserData);
   const users = useSelector((state) => state.users) 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
@@ -20,7 +20,6 @@ export function ProfilePage() {
   const [img, setImg] = useState("");
   const [url, setUrl] = useState("");
   const navigate = useNavigate()
-  console.log(users,"yeh dekho naya redux")
   useEffect(() => {
     (async function () {
       try {
@@ -32,7 +31,9 @@ export function ProfilePage() {
             },
           }
         );
+        console.log(data,"loh aya gya data")
         setPostData(data.mypost);
+        
       } catch (error) {
         console.log(error);
       }
@@ -44,14 +45,9 @@ export function ProfilePage() {
     localStorage.removeItem("login")    
     dispatch(userLoggedOut())
     navigate('/register')
-    // if(!token){
-    //   console.log("yeh dekh token meh aya ")
-    //   return navigate('/register')
-    // }
   }
 
   useEffect(() => {
-    console.log(url, "yeh dekh url useEffect meh agya hai ");
     if (url) {
       updateToDb(url);
       dispatch(updatedProfilePicture({ url }));
@@ -62,19 +58,19 @@ export function ProfilePage() {
     "https://api.cloudinary.com/v1_1/dqn2jzk2n/image/upload ";
 
   const updateProfilePicture = (image) => {
-    console.log(image, "yeh dekh function call hogya ");
     const data = new FormData();
     data.append("file", image);
     data.append("upload_preset", "anti-gram");
     data.append("cloud_name", "dqn2jzk2n");
-    console.log(data);
     postImagetoCloudinary(data);
   };
+
+  console.log(url,"before url")
+  
 
   const postImagetoCloudinary = async (imgData) => {
     try {
       const { data } = await axios.post(CLOUDINARY_URL_API, imgData);
-      console.log(data.secure_url, "yeh meh hu cloudinary wala");
       setUrl(data.secure_url);
     } catch (error) {
       console.log(error.message);
@@ -101,6 +97,7 @@ export function ProfilePage() {
       console.log(error.message);
     }
   };
+  
 
   return (
     <div>

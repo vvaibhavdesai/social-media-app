@@ -36,8 +36,8 @@ function App() {
             },
           }
         );
-        const data = res.data.user;
-        console.log(data);
+        const data = res.data;
+        console.log(data,"yeh data h app seh");
         dispatch(loginUserDetail({ data }));
         navigate("/");
       } catch (error) {
@@ -46,13 +46,6 @@ function App() {
     })();
   }, []);
 
-  useEffect(()=>{
-    console.log("hum data user hai")
-    if(user.token!==null){
-      console.log(user.token,"hum data user hai")
-      navigate('/')
-    }
-  },[user,navigate])
 
   return (
     <div className="App">

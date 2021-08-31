@@ -12,12 +12,16 @@ const usersSlice = createSlice({
   name: "users",
   initialState,
   reducers: {
-    loginUserDetail: (state, action) => {
-      console.log(action.payload.data, "from reducer bholte login");
+    signinUserDetail: (state, action) => {
       state.success = action.payload.data.success
       state.decodedUserData = action.payload.data.decodedUserData
       state.token = action.payload.data.token
-      // return {  ...action.payload.data }
+    },
+    loginUserDetail: (state, action) => {
+      
+      state.success = action.payload.data.success
+      state.decodedUserData = action.payload.data.user.decodedUserData
+      state.token = action.payload.data.user.token
     },
     signupUserDetail: (state, action) => {
       console.log(action.payload.data, "from reducer bholte signup");
@@ -29,8 +33,9 @@ const usersSlice = createSlice({
 
     },
     updatedProfilePicture:(state,action)=>{
-      console.log(action.payload.url,"yeh dekh payload vala ")
+      
       if(state.decodedUserData.pictureUrl !== action.payload.url){
+        state.success = true
         state.decodedUserData.pictureUrl=action.payload.url
       }
 
@@ -42,6 +47,6 @@ const usersSlice = createSlice({
   },
   extraReducers: {},
 });
-export const { loginUserDetail, signupUserDetail, followedUser, updatedProfilePicture, userLoggedOut } = usersSlice.actions;
+export const { loginUserDetail, signupUserDetail, followedUser, updatedProfilePicture, userLoggedOut, signinUserDetail} = usersSlice.actions;
 
 export default usersSlice.reducer;
