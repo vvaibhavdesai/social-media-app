@@ -7,9 +7,10 @@ import { useNavigate } from "react-router";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Toast, callToast } from "../../utils/Toast";
-import { ToastContainer, toast } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 
 import axios from "axios";
+import { notify } from "../../utils/notify";
 
 const FormContainer = styled.div`
   min-height: 80vh;
@@ -22,7 +23,7 @@ const FormContainer = styled.div`
 `;
 
 const Form = styled.form`
-  height: 500px;
+  height: 550px;
   width: 350px;
   text-align: center;
   align-items: center;
@@ -97,6 +98,7 @@ const SubmitBtn = styled.input`
   height: 40px;
   color: #ccc;
   font-size: 1.2rem;
+  text-align:center;
   font-weight: 500;
   transition: 0.3s all ease;
   &:hover {
@@ -106,15 +108,6 @@ const SubmitBtn = styled.input`
   }
 `;
 
-const notify=(message)=>toast.dark(message, {
-  position: "bottom-right",
-  autoClose: 5000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-})
 export function LoginPage() {
   const [signup, setSignUp] = useState(false);
   const [userName, setUserName] = useState("");
@@ -129,23 +122,22 @@ export function LoginPage() {
 
   useEffect(() => {
     if (user.token) {
-      navigate("/");
+      navigate("/explore");
     }
   }, [navigate, user.token]);
 
   const userDetailCollector = (data) => {
     if (!signup) {
-      console.log(data, " yeh data collector ");
       dispatch(signinUserDetail({ data }));
     } else if (signup) {
       dispatch(signupUserDetail({ data }));
     }
   };
 
-  const LOGIN_ROUTE_API =
-    "https://socialMedia.vaibhavdesai888.repl.co/users/login";
+  const LOGIN_ROUTE_API =process.env.REACT_APP_LOGIN_URL
+  const SIGNUP_ROUTE_API =process.env.REACT_APP_SIGNUP_URL
 
-  const loginHandler = async () => {
+  const loginHandler = async (email,password) => {
     try {
       const { data } = await axios.post(LOGIN_ROUTE_API, {
         data: {
@@ -167,10 +159,10 @@ export function LoginPage() {
     }
   };
 
-  const signUpHandler = async () => {
+  const signUpHandler = async (userName,email,password) => {
     try {
       const { data } = await axios.post(
-        "https://socialMedia.vaibhavdesai888.repl.co/users/signup",
+        SIGNUP_ROUTE_API,
         {
           data: {
             name:userName,
@@ -193,7 +185,7 @@ export function LoginPage() {
 
   return (
     
-      <div style={{ width: "100%" }}>
+      <div style={{ width: "100%" , height:"100vh" }}>
         <header className="m-header">
           <h1 className="m-header-title">Antigram</h1>
           <div>&nbsp;</div>
@@ -227,6 +219,7 @@ export function LoginPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 type="email"
                 placeholder="email"
+                required
               ></FormInput>
             </div>
             <div>
@@ -234,6 +227,7 @@ export function LoginPage() {
                 onChange={(e) => setPassword(e.target.value)}
                 type="password"
                 placeholder="password"
+                required
               ></FormInput>
               {signup && (
                 <>
@@ -241,6 +235,7 @@ export function LoginPage() {
                     <FormInput
                       onChange={(e) => setUserName(e.target.value)}
                       placeholder="username"
+                      required={signup ? true : false}
                     ></FormInput>
                   </div>
                 </>
@@ -249,20 +244,19 @@ export function LoginPage() {
             <SubmitBtn
               onClick={() =>
                 signup
-                  ?  signUpHandler()
-                  : loginHandler()
+                  ?  signUpHandler(userName,email,password)
+                  : loginHandler(email,password)
               }
               type="submit"
               placeholder="Submit"
             ></SubmitBtn>
-            {
-              !signup ? <span style={{color:"#535353"}}>
-                <p>
-                TestEmail: vaibhavdesai818@gmail.com</p>
-                <p>
-                password: vaibhav</p>
-              </span>:""
-            }
+            <SubmitBtn
+              onClick={() =>
+                loginHandler("vaibhavdesai818@gmail.com","vaibhav")
+              }
+              type="Guest Login"
+              placeholder="Guest Login"
+            ></SubmitBtn>
           </Form>
         </FormContainer>
       </div>
