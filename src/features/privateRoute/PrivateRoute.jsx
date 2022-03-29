@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 
 export function PrivateRoute({ path, ...props }) {
     const userData = useSelector(state=>state.users)
-    console.log(userData.token ,"yeh meh hu path")
     return userData.token  ? (
     <Route {...props} path={path} />
   ) : (
