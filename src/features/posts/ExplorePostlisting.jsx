@@ -8,6 +8,8 @@ import { TiHeartOutline } from "react-icons/ti";
 import { FaRegCommentDots } from "react-icons/fa";
 import { RiSendPlaneLine } from "react-icons/ri";
 import axios from "axios";
+import { Bars } from "react-loader-spinner";
+import { notify } from "../../utils/notify";
 
 const likePost = async (id, token, dispatch) => {
   try {
@@ -54,7 +56,8 @@ const unLikePost = async (id, token, dispatch) => {
   }
 };
 
-const postComment = async (comment, token, postId) => {
+const postComment = async (setComment, comment, token, postId) => {
+if(comment.length>0){
   try {
     const { data } = await axios.post(
       `https://socialMedia.vaibhavdesai888.repl.co/posts/comment`,
@@ -68,9 +71,13 @@ const postComment = async (comment, token, postId) => {
         },
       }
     );
+    setComment("")
   } catch (error) {
     console.log(error.message);
   }
+}else{
+  return notify('Please enter a comment',"error")
+}
 };
 
 export function ExplorePostListing() {
@@ -90,7 +97,6 @@ export function ExplorePostListing() {
   }, [dispatch, postsStatus, userToken]);
 
   const Image = ({ classN, img }) => {
-    console.log(img);
     return img.map((image) => (
       <img className={classN} alt="" src={image.src} />
     ));
@@ -164,6 +170,16 @@ const Avatar = ({ img }) => {
           </button>
         </div>
         <div className="m-postcard-comment-input">
+        <input
+            onChange={(e) => setComment(e.target.value)}
+            className="m-postcard-comment-input-area"
+            type="text"
+          />
+          <button onClick={() => postComment(setComment,comment, userToken, post._id)}>
+            <i className={`post-comment-icon `}>
+              <RiSendPlaneLine />
+            </i>
+          </button>
         </div>
       </article>
   ));
@@ -171,13 +187,12 @@ const Avatar = ({ img }) => {
   let content;
 
   if (postsStatus === "loading") {
-    content = <div>"...loading"</div>;
+    content = <><Bars heigth="100" width="100" color="grey" ariaLabel="loading-indicator" /></>;
   } else if (postsStatus === "fulfilled") {
     content = posts;
   }
   // else if( postsStatus === "error"){
   //   content = <div>{error}</div>
-
   // }
 
   return <section className="post-feed-adjuster">{content}</section>;

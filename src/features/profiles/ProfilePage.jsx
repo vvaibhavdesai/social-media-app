@@ -6,46 +6,34 @@ import { useEffect, useState } from "react";
 import { updatedProfilePicture } from "../loginpage/LoginPageSlice";
 import { MdCancel } from "react-icons/md";
 import { TiTick } from "react-icons/ti";
-import { userLoggedOut } from "../loginpage/LoginPageSlice"
-import { useNavigate } from "react-router-dom"
+import { userLoggedOut } from "../loginpage/LoginPageSlice";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { fetchProfilePosts } from "./profileSlice";
 
 export function ProfilePage() {
   const userData = useSelector((state) => state.users.decodedUserData);
-  const users = useSelector((state) => state.users) 
   const dispatch = useDispatch();
   const token = useSelector((state) => state.users.token);
-  const [postsData, setPostData] = useState([]);
+  const profileStatus = useSelector((state) => state.profile.status);
   const [logoutButton, setLogoutButton] = useState(false);
   const [img, setImg] = useState("");
   const [url, setUrl] = useState("");
-  const navigate = useNavigate()
+  const profilePosts = useSelector((state) => state.profile.posts);
+  const navigate = useNavigate();
   useEffect(() => {
     (async function () {
-      try {
-        const { data } = await axios.get(
-          `https://socialMedia.vaibhavdesai888.repl.co/posts/mypost`,
-          {
-            headers: {
-              Authorization: token,
-            },
-          }
-        );
-        console.log(data,"loh aya gya data")
-        setPostData(data.mypost);
-        
-      } catch (error) {
-        console.log(error);
+      if (profileStatus === "idle") {
+        dispatch(fetchProfilePosts(token));
       }
     })();
   }, []);
 
-
-  const logoutUser=async()=>{
-    localStorage.removeItem("login")    
-    dispatch(userLoggedOut())
-    navigate('/register')
-  }
+  const logoutUser = async () => {
+    localStorage.removeItem("login");
+    dispatch(userLoggedOut());
+    navigate("/register");
+  };
 
   useEffect(() => {
     if (url) {
@@ -64,9 +52,6 @@ export function ProfilePage() {
     data.append("cloud_name", "dqn2jzk2n");
     postImagetoCloudinary(data);
   };
-
-  console.log(url,"before url")
-  
 
   const postImagetoCloudinary = async (imgData) => {
     try {
@@ -90,116 +75,122 @@ export function ProfilePage() {
           },
         }
       );
-      console.log(data, "yeh h data");
-      console.log(url, "yeh h url");
       setImg("");
     } catch (error) {
       console.log(error.message);
     }
   };
-  
 
   return (
     <div>
-      {userData ? <div className="profile-card">
-        <div className="profile-card-header">
-          <div className="profile-avatar-container">
-            <img
-              className="profile-avatar"
-              alt=""
-              src={
-                userData?.pictureUrl
-                  ? userData.pictureUrl
-                  : "http://placeimg.com/640/480/people"
-              }
-            />
-            <label
-              className="profile-uploadpic-action"
-              htmlFor="icon-button-file"
-            >
-              <input
-                accept="image/*"
-                id="icon-button-file"
-                type="file"
-                data-max-size="2048"
-                onChange={(e) => setImg(e.target.files[0])}
+      {userData ? (
+        <div className="profile-card">
+          <div className="profile-card-header">
+            <div className="profile-avatar-container">
+              <img
+                className="profile-avatar"
+                alt=""
+                src={
+                  userData?.pictureUrl
+                    ? userData.pictureUrl
+                    : "http://placeimg.com/640/480/people"
+                }
               />
-              <FiCamera className="profile-upload-icon" />
-            </label>
-            <div className="profile-image-update">
-              <div
-                className={`profile-image-update-modal ${
-                  img ? "show" : "hide"
-                }`}
+              <label
+                className="profile-uploadpic-action"
+                htmlFor="icon-button-file"
               >
-                <span className="profile-image-update-name">{img?.name}</span>
-                <span>
-                  <button
-                    className="profile-image-update-actionbtn"
-                    onClick={() => updateProfilePicture(img)}
-                  >
-                    <i>
-                      <TiTick />
-                    </i>
-                  </button>
-                  <button
-                    className="profile-image-update-actionbtn"
-                    onClick={() => setImg("")}
-                  >
-                    <i>
-                      <MdCancel />
-                    </i>
-                  </button>
-                </span>
+                <input
+                  accept="image/*"
+                  id="icon-button-file"
+                  type="file"
+                  data-max-size="2048"
+                  onChange={(e) => setImg(e.target.files[0])}
+                />
+                <FiCamera className="profile-upload-icon" />
+              </label>
+              <div className="profile-image-update">
+                <div
+                  className={`profile-image-update-modal ${
+                    img ? "show" : "hide"
+                  }`}
+                >
+                  <span className="profile-image-update-name">{img?.name}</span>
+                  <span>
+                    <button
+                      className="profile-image-update-actionbtn"
+                      onClick={() => updateProfilePicture(img)}
+                    >
+                      <i>
+                        <TiTick />
+                      </i>
+                    </button>
+                    <button
+                      className="profile-image-update-actionbtn"
+                      onClick={() => setImg("")}
+                    >
+                      <i>
+                        <MdCancel />
+                      </i>
+                    </button>
+                  </span>
+                </div>
               </div>
             </div>
-          </div>
-          <div className="profile-card-name">
-            <p>
-              <strong>{userData.name}</strong>
-            </p>
-          </div>
-          <div className="profile-buttons">
-            <button onClick={() => setLogoutButton((prev) => !prev)}>
-              <i className="profile-card-settings">
-                <IoSettingsOutline />
-              </i>
-            </button>
-            {logoutButton && (
-              <button 
-              onClick={logoutUser}
-              className=" logout-button profile-card-buttons">
-                Logout
-              </button>
-            )}
-          </div>
-          {/* <div className="logout-button">
-          </div> */}
-        </div>
-
-        <div className="profile-card-userdetails">
-          <span className="profile-card-separation">
-            <p>POST</p>
-            <p>{postsData.length}</p>
-          </span>
-          <span className="profile-card-separation">
-            <p>FOLLOWERS</p>
-            <p>{userData.followers.length}</p>
-          </span>
-          <span className="profile-card-separation">
-            <p>FOLLOWING</p>
-            <p>{userData.following.length}</p>
-          </span>
-        </div>
-
-        <section className="profile-card-posts">
-          {postsData.map((post) => (
-            <div key={post._id}>
-              <img className="profile-card-post" alt="" src={post.pictureUrl} />
+            <div className="profile-card-name">
+              <p>
+                <strong>{userData.name}</strong>
+              </p>
             </div>
-          ))}
-        </section>
-      </div>:<>Loading....</>}
+            <div className="profile-buttons">
+              <button onClick={() => setLogoutButton((prev) => !prev)}>
+                <i className="profile-card-settings">
+                  <IoSettingsOutline />
+                </i>
+              </button>
+              {logoutButton && (
+                <button
+                  onClick={logoutUser}
+                  className=" logout-button profile-card-buttons"
+                >
+                  Logout
+                </button>
+              )}
+            </div>
+            {/* <div className="logout-button">
+          </div> */}
+          </div>
+
+          <div className="profile-card-userdetails">
+            <span className="profile-card-separation">
+              <p>POST</p>
+              <p>{profilePosts?.length}</p>
+            </span>
+            <span className="profile-card-separation">
+              <p>FOLLOWERS</p>
+              <p>{userData.followers.length}</p>
+            </span>
+            <span className="profile-card-separation">
+              <p>FOLLOWING</p>
+              <p>{userData.following.length}</p>
+            </span>
+          </div>
+
+          <section className="profile-card-posts">
+            {profilePosts?.map((post) => (
+              <div key={post._id}>
+                <img
+                  className="profile-card-post"
+                  alt=""
+                  src={post.pictureUrl}
+                />
+              </div>
+            ))}
+          </section>
+        </div>
+      ) : (
+        <>Loading....</>
+      )}
     </div>
   );
 }

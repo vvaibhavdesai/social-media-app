@@ -37,9 +37,8 @@ function App() {
           }
         );
         const data = res.data;
-        console.log(data,"yeh data h app seh");
         dispatch(loginUserDetail({ data }));
-        navigate("/");
+        navigate("/explore");
       } catch (error) {
         console.log(error.message);
       }
