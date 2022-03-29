@@ -24,7 +24,7 @@ const usersSlice = createSlice({
       state.token = action.payload.data.user.token
     },
     signupUserDetail: (state, action) => {
-      console.log(action.payload.data, "from reducer bholte signup");
+      
       return {  ...action.payload.data }
     },
     followedUser:(state,action)=>{
@@ -45,7 +45,9 @@ const usersSlice = createSlice({
       state.token = null
     }
   },
-  extraReducers: {},
+  extraReducers: {
+
+  },
 });
 export const { loginUserDetail, signupUserDetail, followedUser, updatedProfilePicture, userLoggedOut, signinUserDetail} = usersSlice.actions;
 
