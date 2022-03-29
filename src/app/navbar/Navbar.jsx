@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import "./Navbar.css";
 
 export function Navbar() {
-
   return (
     <nav className="m-nav">
       <Link to="/">
@@ -16,12 +15,12 @@ export function Navbar() {
         </button>
       </Link>
       <Link to="/explore">
-          <button>
-            <i className="m-nav-icons">
-              <BiCompass />
-            </i>
-          </button>
-        </Link>
+        <button>
+          <i className="m-nav-icons">
+            <BiCompass />
+          </i>
+        </button>
+      </Link>
       <Link to="/createposts">
         <button>
           <i className="m-nav-icons">

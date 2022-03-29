@@ -1,10 +1,10 @@
 .m-nav-icons {
   margin: 1rem;
-  color: #657089;
+  color: #919cb1 ;
   font-size: 2rem;
 }
-.m-nav{
-  display:none
+.m-nav {
+  display: none;
 }
 button {
   background: transparent;
@@ -14,12 +14,16 @@ button {
 }
 
 button:active {
-    transform: scale(0.9);
-    /* Scaling button to 0.98 to its original size */
-    box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
-    outline: none;
+  transform: scale(0.9);
+  /* Scaling button to 0.98 to its original size */
+  box-shadow: 3px 2px 22px 1px rgba(255, 255, 255, 0.24);
+  outline: none;
 }
-
+.active-route-icon {
+  color: #657089;
+  margin:1rem;
+  font-size:2rem;
+}
 
 @media screen and (max-width: 790px) {
   .m-nav {
@@ -31,18 +35,18 @@ button:active {
     align-items: center;
     width: 100%;
     background: #f6f6f6;
-    padding: .5rem 0 .5rem 0;
+    padding: 0.5rem 0 0.5rem 0;
     /* overflow:hidden; */
   }
   .m-nav-icons {
     font-size: 1.5rem;
-    margin:1rem;
+    margin: 1rem;
   }
 }
 
-    @media (min-width: 426px) and (max-width: 789px) {
-      .m-nav-icons {
-        margin: 1rem;
-        font-size: 2.5rem;
-      }
-    }
+@media (min-width: 426px) and (max-width: 789px) {
+  .m-nav-icons {
+    margin: 1rem;
+    font-size: 2.5rem;
+  }
+}
