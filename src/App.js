@@ -11,17 +11,33 @@ import { LoginPage } from "./features/loginpage/LoginPage";
 import { CreatePosts } from "./features/createpost/CreatePosts";
 import { PrivateRoute } from "./features/privateRoute/PrivateRoute";
 import axios from "axios";
-import { loginUserDetail, signupUserDetail } from "./features/loginpage/LoginPageSlice";
+import {
+  loginUserDetail,
+  signupUserDetail,
+} from "./features/loginpage/LoginPageSlice";
 import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
-import { PostCard } from './features/posts/PostCard';
-import { ExplorePostListing } from "./features/posts/ExplorePostlisting"
-
+import { useDispatch, useSelector } from "react-redux";
+import { PostCard } from "./features/posts/PostCard";
+import { ExplorePostListing } from "./features/posts/ExplorePostlisting";
+import { notify } from "./utils/notify";
 
 function App() {
-  const  user  = useSelector(state=>state.users) 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const user = useSelector((state) => state.users);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  useEffect(() => {
+    (async function () {
+      try {
+        const response = await axios.get(
+          "https://socialMedia.vaibhavdesai888.repl.co/"
+        );
+        console.log(response, "response");
+      } catch (e) {
+        console.log(e)
+        notify("Please refresh and try again");
+      }
+    })();
+  }, []);
 
   useEffect(() => {
     (async function () {
@@ -45,11 +61,10 @@ function App() {
     })();
   }, []);
 
-
   return (
     <div className="App">
-     {user.token && <Header />}
-     {user.token &&<Navbar />}
+      {user.token && <Header />}
+      {user.token && <Navbar />}
       <section className="post-section">
         <Routes>
           <PrivateRoute path="/" element={<PostsListing />} />
@@ -57,9 +72,9 @@ function App() {
           <PrivateRoute path="/profile" element={<ProfilePage />} />
           <PrivateRoute path="/explore" element={<ExplorePostListing />} />
           <Route path="/notifications" element={<NotificationsList />} />
-          <Route path="/userprofile/:userId" element={<UserProfile/>} />
+          <Route path="/userprofile/:userId" element={<UserProfile />} />
           <Route path="/register" element={<LoginPage />} />
-          <Route path='/posts/:postid' element= {<PostCard/>} />
+          <Route path="/posts/:postid" element={<PostCard />} />
         </Routes>
       </section>
     </div>
