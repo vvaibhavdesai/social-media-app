@@ -5,6 +5,8 @@ import { fetchPosts } from "./postsSlice";
 import { likeToggled } from "./postsSlice";
 import { PostTemplate } from "./PostTemplate";
 import axios from "axios";
+import { notify } from "../../utils/notify";
+import { Bars } from "react-loader-spinner";
 
 const likePost = async (id, token, dispatch) => {
   try {
@@ -54,23 +56,27 @@ const unLikePost = async (id, token, dispatch) => {
 };
 
 const postComment = async (setComment, comment, token, postId) => {
-  try {
-    const { data } = await axios.post(
-      `https://socialMedia.vaibhavdesai888.repl.co/posts/comment`,
-      {
-        text: comment,
-        postId,
-      },
-      {
-        headers: {
-          Authorization: token,
+  if (comment.length > 0) {
+    try {
+      const { data } = await axios.post(
+        `https://socialMedia.vaibhavdesai888.repl.co/posts/comment`,
+        {
+          text: comment,
+          postId,
         },
-      }
-    );
-    console.log(data, "yeh h response from like");
-    setComment("")
-  } catch (error) {
-    console.log(error.message);
+        {
+          headers: {
+            Authorization: token,
+          },
+        }
+      );
+      console.log(data, "yeh h response from like");
+      setComment("");
+    } catch (error) {
+      console.log(error.message);
+    }
+  } else {
+    return notify("Comment cannot be empty", "error");
   }
 };
 
@@ -96,25 +102,34 @@ export function PostsListing() {
     ));
   };
 
-const props = {
-  likePost, 
-  unLikePost,
-  userId,
-  userToken,
-  dispatch,
-  setComment,
-  postComment, 
-  comment
-}
+  const props = {
+    likePost,
+    unLikePost,
+    userId,
+    userToken,
+    dispatch,
+    setComment,
+    postComment,
+    comment,
+  };
 
   const posts = postsData.map((post) => (
-    <PostTemplate key={post._id} post={post} {...props}/>
+    <PostTemplate key={post._id} post={post} {...props} />
   ));
 
   let content;
 
   if (postsStatus === "loading") {
-    content = <div>"...loading"</div>;
+    content = (
+      <>
+        <Bars
+          heigth="100"
+          width="100"
+          color="grey"
+          ariaLabel="loading-indicator"
+        />
+      </>
+    );
   } else if (postsStatus === "fulfilled") {
     content = posts;
   }
