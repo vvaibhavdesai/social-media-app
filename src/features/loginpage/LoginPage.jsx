@@ -15,7 +15,7 @@ import { notify } from "../../utils/notify";
 const FormContainer = styled.div`
   min-height: 80vh;
   max-height: 100%;
-  margin-top:5rem;
+  margin-top: 5rem;
   width: 100%;
   display: flex;
   justify-content: center;
@@ -79,9 +79,9 @@ const FormInput = styled.input`
     transition: background-color 5000s ease-in-out 0s;
   }
 `;
-const black ={
-  background:'black'
-}
+const black = {
+  background: "black",
+};
 const SubmitBtn = styled.input`
   width: 90%;
   cursor: pointer;
@@ -98,7 +98,7 @@ const SubmitBtn = styled.input`
   height: 40px;
   color: #ccc;
   font-size: 1.2rem;
-  text-align:center;
+  text-align: center;
   font-weight: 500;
   transition: 0.3s all ease;
   &:hover {
@@ -114,11 +114,9 @@ export function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector((state) => state.users);
-
 
   useEffect(() => {
     if (user.token) {
@@ -134,10 +132,10 @@ export function LoginPage() {
     }
   };
 
-  const LOGIN_ROUTE_API =process.env.REACT_APP_LOGIN_URL
-  const SIGNUP_ROUTE_API =process.env.REACT_APP_SIGNUP_URL
+  const LOGIN_ROUTE_API = process.env.REACT_APP_LOGIN_URL;
+  const SIGNUP_ROUTE_API = process.env.REACT_APP_SIGNUP_URL;
 
-  const loginHandler = async (email,password) => {
+  const loginHandler = async (email, password) => {
     try {
       const { data } = await axios.post(LOGIN_ROUTE_API, {
         data: {
@@ -152,113 +150,105 @@ export function LoginPage() {
       console.log(data, " yeh dekho data ");
       userDetailCollector(data);
     } catch (error) {
-      notify(error.response.data.message)
-      ;
+      notify(error.response.data.message);
 
       console.log(error.response.data.message);
     }
   };
 
-  const signUpHandler = async (userName,email,password) => {
+  const signUpHandler = async (userName, email, password) => {
     try {
-      const { data } = await axios.post(
-        SIGNUP_ROUTE_API,
-        {
-          data: {
-            name:userName,
-            email,
-            password,
-          },
-        }
-      );
+      const { data } = await axios.post(SIGNUP_ROUTE_API, {
+        data: {
+          name: userName,
+          email,
+          password,
+        },
+      });
       localStorage.setItem(
         "login",
         JSON.stringify({ userLoggedIn: true, token: data.token })
       );
       userDetailCollector(data);
     } catch (error) {
-      notify(error.response.data.message)
-      ;
+      notify(error.response.data.message);
       console.log(error.message);
     }
   };
 
   return (
-    
-      <div style={{ width: "100%" , height:"100vh" }}>
-        <header className="m-header">
-          <h1 className="m-header-title">Antigram</h1>
-          <div>&nbsp;</div>
-          <div>&nbsp;</div>
-        </header>
-        <div>
+    <div style={{ width: "100%", height: "100vh" }}>
+      <header className="m-header">
+        <h1 className="m-header-title">Antigram</h1>
+        <div>&nbsp;</div>
+        <div>&nbsp;</div>
+      </header>
+      <div>
         <ToastContainer
-            position="bottom-right"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-          />
-        </div>
-        <FormContainer>
-          <Form onSubmit={(e) => e.preventDefault()}>
-            <FormHeader>
-              {signup ? "SignUp" : "Login"}
-              <>
-                <button onClick={() => setSignUp((prev) => !prev)}>
-                  {signup ? `login` : `signup`}
-                </button>
-              </>
-            </FormHeader>
-            <div>
-              <FormInput
-                onChange={(e) => setEmail(e.target.value)}
-                type="email"
-                placeholder="email"
-                required
-              ></FormInput>
-            </div>
-            <div>
-              <FormInput
-                onChange={(e) => setPassword(e.target.value)}
-                type="password"
-                placeholder="password"
-                required
-              ></FormInput>
-              {signup && (
-                <>
-                  <div>
-                    <FormInput
-                      onChange={(e) => setUserName(e.target.value)}
-                      placeholder="username"
-                      required={signup ? true : false}
-                    ></FormInput>
-                  </div>
-                </>
-              )}
-            </div>
-            <SubmitBtn
-              onClick={() =>
-                signup
-                  ?  signUpHandler(userName,email,password)
-                  : loginHandler(email,password)
-              }
-              type="submit"
-              placeholder="Submit"
-            ></SubmitBtn>
-            <SubmitBtn
-              onClick={() =>
-                loginHandler("vaibhavdesai818@gmail.com","vaibhav")
-              }
-              type="Guest Login"
-              placeholder="Guest Login"
-            ></SubmitBtn>
-          </Form>
-        </FormContainer>
+          position="bottom-right"
+          autoClose={2000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          pauseOnHover
+        />
       </div>
+      <FormContainer>
+        <Form onSubmit={(e) => e.preventDefault()}>
+          <FormHeader>
+            {signup ? "SignUp" : "Login"}
+            <>
+              <button onClick={() => setSignUp((prev) => !prev)}>
+                {signup ? `login` : `signup`}
+              </button>
+            </>
+          </FormHeader>
+          <div>
+            <FormInput
+              onChange={(e) => setEmail(e.target.value)}
+              type="email"
+              placeholder="email"
+              required
+            ></FormInput>
+          </div>
+          <div>
+            <FormInput
+              onChange={(e) => setPassword(e.target.value)}
+              type="password"
+              placeholder="password"
+              required
+            ></FormInput>
+            {signup && (
+              <>
+                <div>
+                  <FormInput
+                    onChange={(e) => setUserName(e.target.value)}
+                    placeholder="username"
+                    required={signup ? true : false}
+                  ></FormInput>
+                </div>
+              </>
+            )}
+          </div>
+          <SubmitBtn
+            onClick={() =>
+              signup
+                ? signUpHandler(userName, email, password)
+                : loginHandler(email, password)
+            }
+            type="submit"
+            placeholder="Submit"
+          ></SubmitBtn>
+          <SubmitBtn
+            onClick={() => loginHandler("vaibhavdesai818@gmail.com", "vaibhav")}
+            type="submit"
+            placeholder="Guest Login"
+          ></SubmitBtn>
+        </Form>
+      </FormContainer>
+    </div>
   );
 }

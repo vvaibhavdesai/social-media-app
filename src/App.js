@@ -34,7 +34,7 @@ function App() {
         console.log(response, "response");
       } catch (e) {
         console.log(e)
-        notify("We are fixing our server please come back later");
+        // notify("We are fixing our server please come back later");
       }
     })();
   }, []);
