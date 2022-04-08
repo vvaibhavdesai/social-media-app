@@ -244,7 +244,7 @@ export function LoginPage() {
           ></SubmitBtn>
           <SubmitBtn
             onClick={() => loginHandler("vaibhavdesai818@gmail.com", "vaibhav")}
-            type="submit"
+            type="Guest Login"
             placeholder="Guest Login"
           ></SubmitBtn>
         </Form>
